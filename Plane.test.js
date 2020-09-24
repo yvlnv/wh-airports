@@ -3,7 +3,8 @@ const Plane = require('./Plane')
 
 describe('Plane', function () {
     test('has a name', function() {
-        const plane = new Plane({name: 'Condor'})
+        const plane = new Plane()
+        plane.name = "Condor"
         expect(plane.name).toEqual("Condor")
     })
 
@@ -28,7 +29,8 @@ describe('Plane', function () {
     })
 
     test('boarding capacity not reached', () => {
-        const plane = new Plane({name: "Concord", capacity: 100})
+        const plane = new Plane()
+        plane.capacity = 100
         const ben = new Passenger({name: "Ben"})
         const elisa = new Passenger({name: "Elisa"})
         const jen = new Passenger({name: "Jen"})
