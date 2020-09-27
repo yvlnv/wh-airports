@@ -60,9 +60,36 @@ describe('Airport', function () {
         LHR.departPlane(plane2)
         expect(LHR.planes.length).toBe(0)
         expect(DME.planes.length).toBe(3)
-        console.log(plane1)
         expect(plane1.location).toBe(DME.name)
         expect(plane1.location).toBe('Domodedovo')
     })
 
+    // test with callback function
+    test('airport has a city', (done) => {
+        const LHR = new Airport({name: 'LHR'})
+        LHR.getInfo((err, result) => {
+            expect(err).toBeNull()
+            expect(result.city).toEqual('London')
+            done()
+        })
+    })
+
+    // test with Promises
+    test('airports have a city', () => {
+        const CDG = new Airport({name: 'CDG'})
+        return CDG.getInfoPromiseOrAwait()
+            .then(info => {
+                expect(info.city).toEqual('Paris')
+            })
+            .catch(err => {
+                expect(err).toBeNull()
+            })
+    })
+
+    // test with await
+    test('can get information like the city from an airport instance', async () => {
+        const CDG = new Airport({name: 'CDG'})
+        const airport = await CDG.getInfoPromiseOrAwait()
+        expect(airport.city).toEqual('Paris')
+    })
 })
